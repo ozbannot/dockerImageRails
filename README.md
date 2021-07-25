@@ -80,6 +80,10 @@ heroku open
 ```
 ## CircleCI導入
 ```
-・masterにマージする際にcircleCIによるCICD導入
+・masterにマージする際にcircleCIによるCI導入
+・masterにマージ後にcircleCIによるCD導入(herokuのappに本番デプロイされる仕組み)
+・本番デプロイされているかはCircleCIのダッシュボードおよび、herokuのダッシュボード確認
+・CDの際に、CircleCIの方にAPPNAMEの環境変数、herokuのAPIKEYを渡している
+・herokuのログでも確認可能 heroku logs -t
 ```
 
