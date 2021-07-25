@@ -57,9 +57,11 @@ downさせてpsを切ったりするとupする際にもう一度上記のコマ
 
 ## herokuに本番デプロイ
 ```
+heroku container registoryを採用
 注意：M1 Macbookの場合、上記のコンテナイメージだとherokuに本番デプロイする際にハマる（heroku側のMySQLの問題でマシンイメージをlinux/amd64に対応させる必要あり）
 解決する際に参考したサイト：https://zenn.dev/daku10/articles/m1-heroku-container-trouble-exec-format-error
 上記のコンテナイメージを参考にさらにherokuデプロイ用のコンテナイメージを作成するイメージ
+もしかしたらファイルでdbイメージを上記に合わせたら解決する？（まだ未検証）
 ```
 ```
 当時の実行コマンド(参考)
@@ -78,12 +80,17 @@ heroku run bundle exec rake db:migrate RAILS_ENV=production -a {appname}
 ・app公開
 heroku open
 ```
-## CircleCI導入
+## CircleCI導入(CI/CD)
 ```
 ・masterにマージする際にcircleCIによるCI導入
 ・masterにマージ後にcircleCIによるCD導入(herokuのappに本番デプロイされる仕組み)
 ・本番デプロイされているかはCircleCIのダッシュボードおよび、herokuのダッシュボード確認
 ・CDの際に、CircleCIの方にAPPNAMEの環境変数、herokuのAPIKEYを渡している
 ・herokuのログでも確認可能 heroku logs -t
+```
+```
+デプロイがタイムアウトになる問題
+heroku側の無料プランだとタイムアウト値がMAX120秒なので接続が切れてデプロイが高確率でこける笑
+2021-07-25T12:00:32.516223+00:00 heroku[web.1]: Error R10 (Boot timeout) -> Web process failed to bind to $PORT within 120 seconds of launch
 ```
 
