@@ -1,0 +1,13 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@1.1.2 
+
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.7
+    working_directory: ~/dockerImageRails/src
+    steps:
+      - checkout:
+        path: ~/dockerImageRails
+      - ruby/bundle-install
