@@ -78,5 +78,8 @@ heroku run bundle exec rake db:migrate RAILS_ENV=production -a {appname}
 ・app公開
 heroku open
 ```
-
+## CircleCI導入
+```
+・masterにマージする際にcircleCIによるCICD導入
+```
 
