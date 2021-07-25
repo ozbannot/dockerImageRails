@@ -55,4 +55,28 @@ docker-compose run web rails db:create
 downさせてpsを切ったりするとupする際にもう一度上記のコマンドでDBを作り直す必要がある
 ```
 
+## herokuに本番デプロイ
+```
+注意：M1 Macbookの場合、上記のコンテナイメージだとherokuに本番デプロイする際にハマる（heroku側のMySQLの問題でマシンイメージをlinux/amd64に対応させる必要あり）
+解決する際に参考したサイト：https://zenn.dev/daku10/articles/m1-heroku-container-trouble-exec-format-error
+上記のコンテナイメージを参考にさらにherokuデプロイ用のコンテナイメージを作成するイメージ
+```
+```
+当時の実行コマンド(参考)
+・currentディレクトリからheroku対応用のイメージを作り直す
+docker buildx build . --platform linux/amd64 -t {username}/{appname}:latest
+・タグ作成
+docker tag {username}/{appname} registry.heroku.com/{appname}/web
+・heroku対応用のイメージ作成
+docker push registry.heroku.com/{appname}/web
+・イメージ確認
+docker images
+・herokuにコンテナデプロイ
+heroku container:release web -a {appname}
+・db作成（オプション）※今回こけた元の原因
+heroku run bundle exec rake db:migrate RAILS_ENV=production -a {appname}
+・app公開
+heroku open
+```
+
 
